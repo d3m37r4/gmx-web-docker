@@ -1,0 +1,32 @@
+version: '2'
+services:
+  nginx:
+    image: nginx:stable-alpine
+    environment:
+      NGINX_HOST: gamex.local
+    ports:
+        - "18001:80"
+    volumes:
+        - ./app:/app
+        - ./site.conf:/etc/nginx/conf.d/site.conf
+    links:
+        - php
+  php:
+    image: php:7.0-fpm-alpine
+    volumes:
+      - ./app:/app
+    links:
+        - db
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: on-failure
+    environment:
+      MYSQL_DATABASE: gamex
+      MYSQL_USER: gamex
+      MYSQL_PASSWORD: gamex
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - 13306:3306
+    volumes:
+      - ./database:/var/lib/mysql
