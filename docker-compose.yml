@@ -1,23 +1,23 @@
-version: '2'
+version: '3'
 services:
-  nginx:
+  gamex_nginx:
     image: nginx:stable-alpine
     environment:
-      NGINX_HOST: gamex.local
+      NGINX_HOST: localhost
     ports:
         - "18001:80"
     volumes:
         - ./app:/app
-        - ./site.conf:/etc/nginx/conf.d/site.conf
+        - ./site.conf:/etc/nginx/conf.d/default.conf
     links:
-        - php
-  php:
+        - gamex_php
+  gamex_php:
     image: php:7.0-fpm-alpine
     volumes:
       - ./app:/app
     links:
-        - db
-  db:
+        - gamex_db
+  gamex_db:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: on-failure
