@@ -19,8 +19,6 @@ services:
             - ./app:/app
         links:
             - gamex_db
-        ports:
-            - "19000:9000"
     gamex_db:
         image: mysql
         command: --default-authentication-plugin=mysql_native_password

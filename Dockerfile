@@ -6,4 +6,5 @@ RUN docker-php-ext-install pdo_mysql \
     && docker-php-ext-enable xdebug \
     && echo 'xdebug.remote_port=9000' >> /usr/local/etc/php/php.ini \
     && echo 'xdebug.remote_enable=1' >> /usr/local/etc/php/php.ini \
-    && echo 'xdebug.remote_connect_back=1' >> /usr/local/etc/php/php.ini
+    && echo 'xdebug.remote_connect_back=1' >> /usr/local/etc/php/php.ini \
+    && echo 'xdebug.remote_autostart=1' >> /usr/local/etc/php/php.ini
