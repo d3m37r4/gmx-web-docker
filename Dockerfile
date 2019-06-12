@@ -1,11 +1,37 @@
-FROM php:7.1-fpm-alpine
+FROM alpine:edge
 
-RUN docker-php-ext-install pdo_mysql \
-	&& apk add --no-cache $PHPIZE_DEPS \
-    && pecl install xdebug-2.5.0 \
-    && docker-php-ext-enable xdebug \
-    && echo 'xdebug.remote_host=127.0.0.1' >> /usr/local/etc/php/php.ini \
-    && echo 'xdebug.remote_port=9000' >> /usr/local/etc/php/php.ini \
-    && echo 'xdebug.remote_enable=1' >> /usr/local/etc/php/php.ini \
-    && echo 'xdebug.remote_connect_back=1' >> /usr/local/etc/php/php.ini \
-    && echo 'xdebug.remote_autostart=1' >> /usr/local/etc/php/php.ini
+RUN set -xe \
+    && mkdir -p /var/www/app \
+    && apk add --update --no-cache \
+        ca-certificates \
+        curl \
+        pcre \
+        zlib \
+        libpq \
+        php7 \
+        php7-bcmath \
+        php7-ctype \
+        php7-curl \
+        php7-dom \
+        php7-iconv \
+        php7-intl \
+        php7-json \
+        php7-openssl \
+        php7-opcache \
+        php7-mbstring \
+        php7-mcrypt \
+        php7-pgsql \
+        php7-pdo \
+        php7-pdo_pgsql \
+        php7-phar \
+        php7-phpdbg \
+        php7-posix \
+        php7-session \
+        php7-sockets \
+        php7-xml \
+        php7-xmlreader \
+        php7-zip \
+        php7-zlib \
+        php7-pecl-xdebug
+
+CMD ["php", "-S", "0.0.0.0:80", "-t", "/var/www/app", "/var/www/app/router.php"]
